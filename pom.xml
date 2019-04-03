@@ -1,0 +1,137 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.zdawn</groupId>
+  <artifactId>commons-pv-jdbcmq</artifactId>
+  <version>0.1.0</version>
+  <packaging>jar</packaging>
+
+  <name>commons-pv-jdbcqueue</name>
+  <url>http://maven.apache.org</url>
+  <description>realize queue use jdbc store  for commons-pv component</description>
+
+  <licenses>
+      <license>
+          <name>The Apache Software License, Version 2.0</name>
+          <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+          <distribution>repo</distribution>
+      </license>
+  </licenses>
+
+  <scm>
+      <url>https://github.com/zhaobaosheng/commons-pv-jdbcmq</url>
+      <connection>scm:git:https://github.com/zhaobaosheng/commons-pv-jdbcmq.git</connection>
+      <developerConnection>scm:git:https://github.com/zhaobaosheng/commons-pv-jdbcmq.git</developerConnection>
+      <tag>commons-pv-jdbcmq-0.1.0</tag>
+  </scm>
+
+  <developers>
+      <developer>
+          <name>zhaobaosheng</name>
+          <email>nbs_nbs_nbs@163.com</email>
+      </developer>
+  </developers>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+ <distributionManagement>
+      <snapshotRepository>
+          <id>oss</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      </snapshotRepository>
+      <repository>
+          <id>oss</id>
+          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+      </repository>
+  </distributionManagement>
+  
+  <dependencies>
+    <dependency>
+      <groupId>com.zdawn</groupId>
+  	  <artifactId>commons-pv</artifactId>
+      <version>0.1.0</version>
+    </dependency>
+  </dependencies>
+    <build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>utf-8</encoding>
+					<showWarnings>true</showWarnings>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-surefire-plugin</artifactId>
+		        <configuration>
+		          <skip>true</skip>
+		        </configuration>
+      		</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<configuration>
+					<encoding>utf-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+							<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <failOnError>false</failOnError>
+                    <doclint>none</doclint>
+                </configuration>
+              <executions>
+                <execution>
+                  <id>attach-javadocs</id>
+                  <goals>
+                    <goal>jar</goal>
+                  </goals>
+                <phase>package</phase>
+                </execution>
+              </executions>
+            </plugin>
+			<plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-gpg-plugin</artifactId>
+               <executions>
+                   <execution>
+                       <id>sign-artifacts</id>
+                       <phase>verify</phase>
+                       <goals>
+                           <goal>sign</goal>
+                       </goals>
+                   </execution>
+               </executions>
+            </plugin>
+		</plugins>
+		<resources>
+			<resource>
+				<excludes>
+					<exclude>**/*.*</exclude>
+				</excludes>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+	</build>
+</project>
