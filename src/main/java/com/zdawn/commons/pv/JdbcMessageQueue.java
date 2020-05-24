@@ -1,7 +1,8 @@
 package com.zdawn.commons.pv;
 
 import java.io.ByteArrayInputStream;
-import java.sql.Blob;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -179,11 +180,7 @@ public class JdbcMessageQueue implements MessageQueue {
 			int execCount = rs.getInt(1);
 			int msgState = rs.getInt(2);
 			if(msgState!=0 && msgState!=2) throw new Exception("msgId="+msgId+ " message state is not correct msgState="+msgState);
-			byte[] content = null;
-			Blob blob = rs.getBlob(3);
-		    if (null != blob) {
-		    	content = blob.getBytes(1, (int) blob.length());
-		    }
+			byte[] content = readContent(rs);
 			if(content==null) throw new Exception("msgId="+msgId+ " message is empty");
 			//执行次数大于设置值
 			if(execCount>=msgHandleTimes){
@@ -210,6 +207,23 @@ public class JdbcMessageQueue implements MessageQueue {
 			closeStatement(psUpdate);
 		}
 	}
+	//read message content
+	private byte[] readContent(ResultSet rs) throws Exception {
+		byte[] content = null;
+		try(InputStream is = rs.getBinaryStream(3)){
+			ByteArrayOutputStream os  = new ByteArrayOutputStream();
+			byte[] buf = new byte[512];
+			int bytesRead = -1;
+			while((bytesRead = is.read(buf))!=-1) {
+				os.write(buf, 0, bytesRead);
+			}
+			content = os.toByteArray();
+		} catch (Exception e) {
+			throw e;
+		}
+		return content;
+	}
+	
 	private void updateMsgNonexecution() throws Exception{
 		String sql="update "+msgStoreTableName+" set msg_state=0 where msg_state=1";
 		Connection conn = null;
