@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class JdbcMessageQueue implements MessageQueue {
-	private static Logger logger = LoggerFactory.getLogger(FileMessageQueue.class);
+	private static Logger logger = LoggerFactory.getLogger(JdbcMessageQueue.class);
 	/**
 	 * 队列最大深度
 	 */
